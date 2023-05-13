@@ -1,4 +1,6 @@
 {
+  "name": "@ssc-hermes/post",
+  "description": "Posts in *hermes*",
   "type": "module",
   "version": "0.0.0",
   "main": "dist/index.js",
@@ -40,8 +42,6 @@
   },
   "author": "nichoth <nichoth@gmail.com> (https://nichoth.com)",
   "license": "AGPL-3.0-or-later",
-  "name": "@ssc-hermes/post",
-  "description": "A template for typescript *dependency* modules that run in a browser environment. Uses `tape-run` for tests in a browser. See [template-ts](https://github.com/nichoth/template-ts) for the same thing but targeting Node.",
   "directories": {
     "test": "test"
   },
@@ -52,6 +52,10 @@
   "bugs": {
     "url": "https://github.com/ssc-hermes/post/issues"
   },
-  "homepage": "https://github.com/ssc-hermes/post#readme"
+  "homepage": "https://github.com/ssc-hermes/post#readme",
+  "dependencies": {
+    "@oddjs/odd": "^0.37.1",
+    "@ssc-hermes/message": "^0.4.0",
+    "@ssc-hermes/util": "^0.4.0"
+  }
 }
-
