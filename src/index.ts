@@ -23,7 +23,7 @@ interface NewPostArgs {
 export type SignedPost = SignedRequest<Post>
 
 /**
- * Create and sign a new post object. You need to figure out the `prev` and `seq`
+ * Create a signed new post object. You need to figure out the `prev` and `seq`
  * args.
  * @param crypto {Crypto.Implementation} Fission crypto object
  * @param file {File} A file object, as from a browser, for the image that
