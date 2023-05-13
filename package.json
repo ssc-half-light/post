@@ -15,7 +15,13 @@
     "postversion": "git push && git push --tags && npm publish",
     "prepublishOnly": "npm run build"
   },
+  "dependencies": {
+    "@oddjs/odd": "^0.37.1",
+    "@ssc-hermes/message": "^0.4.0",
+    "@ssc-hermes/util": "^0.4.1"
+  },
   "devDependencies": {
+    "@ssc-hermes/wnfs-post": "^0.23.0",
     "@typescript-eslint/parser": "^5.55.0",
     "esbuild": "^0.15.18",
     "standardx": "^7.0.0",
@@ -52,10 +58,5 @@
   "bugs": {
     "url": "https://github.com/ssc-hermes/post/issues"
   },
-  "homepage": "https://github.com/ssc-hermes/post#readme",
-  "dependencies": {
-    "@oddjs/odd": "^0.37.1",
-    "@ssc-hermes/message": "^0.4.0",
-    "@ssc-hermes/util": "^0.4.0"
-  }
+  "homepage": "https://github.com/ssc-hermes/post#readme"
 }

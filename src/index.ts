@@ -5,9 +5,8 @@ import { writeKeyToDid } from '@ssc-hermes/util'
 import { getHash } from '@ssc-hermes/util/hash'
 
 export interface Post {
-    author: string,
     seq: number,
-    prev: number,
+    prev: string|null,
     username: string,
     content: { type:string, text:string, alt:string, mentions: string[] }
     timestamp: number
@@ -18,7 +17,7 @@ interface NewPostArgs {
     username:string,
     alt:string,
     seq:number,
-    prev:number
+    prev:string|null  // the hash of the previous message
 }
 
 export type SignedPost = SignedRequest<Post>
