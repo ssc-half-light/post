@@ -8,6 +8,7 @@ npm i -S @ssc-hermes/post
 
 ## example
 ```ts
+const wn = self.oddjs  // `@oddjs/odd` is attached to `window` here
 const wnfsPost = await WnfsPost.create(wn, { name: 'testing', creator: 'test' })
 
 const file:File = document.querySelector('file-input').files[0]
