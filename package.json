@@ -13,7 +13,6 @@
     "postversion": "git push && git push --tags && npm publish",
     "prepublishOnly": "npm run build"
   },
-  "dependencies": {},
   "devDependencies": {
     "@typescript-eslint/parser": "^5.55.0",
     "esbuild": "^0.15.18",
@@ -40,5 +39,19 @@
     }
   },
   "author": "nichoth <nichoth@gmail.com> (https://nichoth.com)",
-  "license": "AGPL-3.0-or-later"
+  "license": "AGPL-3.0-or-later",
+  "name": "@ssc-hermes/post",
+  "description": "A template for typescript *dependency* modules that run in a browser environment. Uses `tape-run` for tests in a browser. See [template-ts](https://github.com/nichoth/template-ts) for the same thing but targeting Node.",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ssc-hermes/post.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ssc-hermes/post/issues"
+  },
+  "homepage": "https://github.com/ssc-hermes/post#readme"
 }
+
