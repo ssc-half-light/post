@@ -18,7 +18,7 @@
   "dependencies": {
     "@oddjs/odd": "^0.37.1",
     "@ssc-hermes/message": "^0.4.0",
-    "@ssc-hermes/util": "^0.4.1"
+    "@ssc-hermes/util": "^0.4.2"
   },
   "devDependencies": {
     "@ssc-hermes/wnfs-post": "^0.23.0",
