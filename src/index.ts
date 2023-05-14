@@ -4,6 +4,8 @@ import timestamp from 'monotonic-timestamp'
 import { writeKeyToDid } from '@ssc-hermes/util'
 import { getHash } from '@ssc-hermes/util/hash'
 
+export { verify } from '@ssc-hermes/message'
+
 export interface Post {
     seq: number,
     prev: string|null,
