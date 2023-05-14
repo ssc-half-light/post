@@ -12,6 +12,7 @@ You need to supply a Fission `Crypto` object, the hash of the previous message, 
 ### create
 
 ```ts
+import { create } from '@ssc-hermes/post'
 import { WnfsPost } from '@ssc-hermes/wnfs-post'
 const wn = self.oddjs  // `@oddjs/odd` is attached to `window` here
 const wnfsPost = await WnfsPost.create(wn, { name: 'testing', creator: 'test' })
@@ -44,6 +45,7 @@ const post = await create(wnfsPost.crypto, file, {
 Get a URL-safe hash of this post. 
 
 ```js
+import { getId } from '@ssc-hermes/post'
 const id = getId(post)
 // 5olZOzr5xalmGXTxATl4Ldt4V0Z2Z8OrD3KxLTj-ngU
 ```
