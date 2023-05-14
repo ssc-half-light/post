@@ -3,6 +3,9 @@ import { Crypto } from '@oddjs/odd'
 import timestamp from 'monotonic-timestamp'
 import { writeKeyToDid } from '@ssc-hermes/util'
 import { getHash } from '@ssc-hermes/util/hash'
+import { blake3 } from '@noble/hashes/blake3'
+import { toString } from 'uint8arrays/to-string'
+import canon from 'json-canon'
 
 export { verify } from '@ssc-hermes/message'
 
@@ -51,4 +54,10 @@ Promise<SignedPost> {
             mentions: [await getHash(file)]
         }
     })
+}
+
+export function getId (msg:SignedPost) {
+    const hash = blake3(canon(msg))
+    const slugifiedHash = toString(hash, 'base64url')
+    return slugifiedHash
 }

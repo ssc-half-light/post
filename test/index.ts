@@ -1,6 +1,6 @@
 import { test } from 'tapzero'
 import { WnfsPost } from '@ssc-hermes/wnfs-post'
-import { create } from '../dist/index.js'
+import { create, getId } from '../dist/index.js'
 
 // @ts-ignore
 const wn = self.oddjs
@@ -13,10 +13,11 @@ test('setup', async t => {
     t.ok(wnfsPost, 'create a wnfs instance')
 })
 
+let post
 test('create a post', async t => {
     const base64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII'
     const file = dataURItoFile(base64, 'test.png')
-    const post = await create(wnfsPost.crypto, file, {
+    post = await create(wnfsPost.crypto, file, {
         seq: 0,
         prev: null,
         text: 'a test post',
@@ -27,6 +28,12 @@ test('create a post', async t => {
     t.ok(post, 'should return a post')
     t.equal(post.content.text, 'a test post', 'should have the right text')
     t.equal(typeof post.signature, 'string', 'should have a signature')
+})
+
+test('get an ID for a post', t => {
+    const id = getId(post)
+    console.log('**id**', id)
+    t.equal(typeof id, 'string', 'should create an ID as a string')
 })
 
 function dataURItoFile (dataurl, filename) {
