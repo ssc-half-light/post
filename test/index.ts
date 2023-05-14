@@ -33,6 +33,7 @@ test('create a post', async t => {
 test('get an ID for a post', t => {
     const id = getId(post)
     console.log('**id**', id)
+    // the id will be differente each time because it conrtains a signature
     t.equal(typeof id, 'string', 'should create an ID as a string')
 })
 
