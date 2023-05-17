@@ -1,6 +1,6 @@
 import { test } from 'tapzero'
 import { WnfsPost } from '@ssc-hermes/wnfs-post'
-import { create, getId } from '../dist/index.js'
+import { create, getId, SignedPost } from '../dist/index.js'
 
 // @ts-ignore
 const wn = self.oddjs
@@ -13,7 +13,7 @@ test('setup', async t => {
     t.ok(wnfsPost, 'create a wnfs instance')
 })
 
-let post
+let post:SignedPost
 test('create a post', async t => {
     const base64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII'
     const file = dataURItoFile(base64, 'test.png')

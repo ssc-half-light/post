@@ -2,7 +2,7 @@ import { create as createMsg, SignedRequest } from '@ssc-hermes/message'
 import { Crypto } from '@oddjs/odd'
 import timestamp from 'monotonic-timestamp'
 import { writeKeyToDid } from '@ssc-hermes/util'
-import { getHash } from '@ssc-hermes/util/hash'
+import { getHash, getHashFile } from '@ssc-hermes/util/hash'
 import { blake3 } from '@noble/hashes/blake3'
 import { toString } from 'uint8arrays/to-string'
 import canon from 'json-canon'
@@ -51,7 +51,27 @@ Promise<SignedPost> {
             type: 'public',
             text,
             alt,
-            mentions: [await getHash(file)]
+            mentions: [await getHashFile(file)]
+        }
+    })
+}
+
+export async function fromArray (crypto:Crypto.Implementation, arr:Uint8Array,
+    args:NewPostArgs) {
+    const author = await writeKeyToDid(crypto)
+    const { text, username, alt, seq, prev } = args
+
+    return createMsg(crypto, {
+        timestamp: timestamp(),
+        author,
+        seq,
+        prev,
+        username,
+        content: {
+            type: 'public',
+            text,
+            alt,
+            mentions: [getHash(arr)]
         }
     })
 }
