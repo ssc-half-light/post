@@ -56,7 +56,7 @@ Promise<SignedPost> {
     })
 }
 
-export async function fromArray (crypto:Crypto.Implementation, arr:Uint8Array,
+export async function createFromArray (crypto:Crypto.Implementation, arr:Uint8Array,
     args:NewPostArgs) {
     const author = await writeKeyToDid(crypto)
     const { text, username, alt, seq, prev } = args
