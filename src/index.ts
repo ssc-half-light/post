@@ -22,7 +22,8 @@ interface NewPostArgs {
     username:string,
     alt:string,
     seq:number,
-    prev:string|null  // the hash of the previous message
+    prev:string|null,  // the hash of the previous message
+    type:'public'|'private'
 }
 
 export type SignedPost = SignedRequest<Post>
@@ -39,7 +40,7 @@ export type SignedPost = SignedRequest<Post>
 export async function create (crypto:Crypto.Implementation, file:File, args:NewPostArgs):
 Promise<SignedPost> {
     const author = await writeKeyToDid(crypto)
-    const { text, username, alt, seq, prev } = args
+    const { text, username, alt, seq, prev, type } = args
 
     return createMsg(crypto, {
         timestamp: timestamp(),
@@ -48,7 +49,7 @@ Promise<SignedPost> {
         prev,
         username,
         content: {
-            type: 'public',
+            type,
             text,
             alt,
             mentions: [await getHashFile(file)]
@@ -59,7 +60,7 @@ Promise<SignedPost> {
 export async function createFromArray (crypto:Crypto.Implementation, arr:Uint8Array,
     args:NewPostArgs) {
     const author = await writeKeyToDid(crypto)
-    const { text, username, alt, seq, prev } = args
+    const { text, username, alt, seq, prev, type } = args
 
     return createMsg(crypto, {
         timestamp: timestamp(),
@@ -68,7 +69,7 @@ export async function createFromArray (crypto:Crypto.Implementation, arr:Uint8Ar
         prev,
         username,
         content: {
-            type: 'public',
+            type,
             text,
             alt,
             mentions: [getHash(arr)]
