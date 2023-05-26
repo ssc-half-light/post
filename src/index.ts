@@ -57,8 +57,8 @@ Promise<SignedPost> {
     })
 }
 
-export async function createFromArray (crypto:Crypto.Implementation, arr:Uint8Array,
-    args:NewPostArgs) {
+export async function createFromBuffer (crypto:Crypto.Implementation, arr:Uint8Array,
+    args:NewPostArgs):Promise<SignedPost> {
     const author = await writeKeyToDid(crypto)
     const { text, username, alt, seq, prev, type } = args
 
@@ -77,8 +77,35 @@ export async function createFromArray (crypto:Crypto.Implementation, arr:Uint8Ar
     })
 }
 
-export function getId (msg:SignedPost) {
+export function getId (msg:SignedPost):string {
     const hash = blake3(canon(msg))
     const slugifiedHash = toString(hash, 'base64url')
     return slugifiedHash
 }
+
+// https://github.com/ssbc/ssb2-discussion-forum/issues/22#issuecomment-1513622620
+// {
+//     "content": {
+//       "text": "Hello world!",
+//       "when": 1681842582086 // optional
+//     },
+//     "metadata": {
+//       // hashes the `content` (encoded as alphabetically-sorted JSON with no spaces nor newlines)
+//       "hash": "9R7XmBhHF5ooPg34j9TQcz",
+//       "size": 23, // size of the `content` (same encoding as above)
+//       "tangles": {
+//         // this is the feed's "root msg" ID, but there may be more tangles
+//         "3F26EgnwbMHm1EEeeVM1Eb": {
+//           "depth": 1,
+//           "prev": [
+//             "3F26EgnwbMHm1EEeeVM1Eb"
+//           ]
+//         }
+//       },
+//       "type": "post",
+//       "v": 1, // feed format version, so far hard-coded at 1
+//       "who": "4mjQ5aJu378cEu6TksRG3uXAiKFiwGjYQtWAjfVjDAJW"
+//     },
+//     // Signs the `metadata` (encoded as alphabetically-sorted JSON with no spaces nor newlines)
+//     "sig": "5abJdD6RRCsWXKJLaEKRhUb1HKh4aKPFteFRgUBfyJD4cFzo5MVaMdWbwM2CfpNRFSjR9NkczRL2LcSyQVThYnRr"
+//   }

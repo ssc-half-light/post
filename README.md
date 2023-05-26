@@ -1,5 +1,5 @@
 # post
-Create post objects
+Create in-memory post objects. This does not handle persistence.
 
 ## install
 ```
