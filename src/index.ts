@@ -13,7 +13,8 @@ export interface Post {
     seq: number,
     prev: string|null,
     username: string,
-    content: { type:string, text:string, alt:string, mentions: string[] }
+    content: { text:string, alt:string, mentions: string[] }
+    type:string,
     timestamp: number
 }
 
@@ -47,9 +48,9 @@ Promise<SignedPost> {
         author,
         seq,
         prev,
+        type,
         username,
         content: {
-            type,
             text,
             alt,
             mentions: [await getHashFile(file)]
@@ -68,8 +69,8 @@ export async function createFromBuffer (crypto:Crypto.Implementation, arr:Uint8A
         seq,
         prev,
         username,
+        type,
         content: {
-            type,
             text,
             alt,
             mentions: [getHash(arr)]

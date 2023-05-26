@@ -28,6 +28,7 @@ test('create a post', async t => {
 
     t.ok(post, 'should return a post')
     t.equal(post.content.text, 'a test post', 'should have the right text')
+    t.equal(post.type, 'public', 'should be "public" type')
     t.equal(typeof post.signature, 'string', 'should have a signature')
 })
 
