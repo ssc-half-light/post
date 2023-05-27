@@ -1,7 +1,6 @@
 import { create as createMsg, SignedRequest } from '@ssc-hermes/message'
 import { Crypto } from '@oddjs/odd'
 import timestamp from 'monotonic-timestamp'
-import { writeKeyToDid } from '@ssc-hermes/util'
 import { getHash, getHashFile } from '@ssc-hermes/util/hash'
 import { blake3 } from '@noble/hashes/blake3'
 import { toString } from 'uint8arrays/to-string'
@@ -10,12 +9,7 @@ import canon from 'json-canon'
 export { verify } from '@ssc-hermes/message'
 
 export interface Post {
-    seq: number,
-    prev: string|null,
-    username: string,
-    content: { text:string, alt:string, mentions: string[] }
-    type:string,
-    timestamp: number
+    content: { text:string, alt:string, mentions: string[] },
 }
 
 interface NewPostArgs {
@@ -29,43 +23,83 @@ interface NewPostArgs {
 
 export type SignedPost = SignedRequest<Post>
 
+export interface Metadata {
+    type:'public'|'private',
+    timestamp: number,
+    proof:string,
+    seq: number,
+    prev: string|null,
+    username: string,
+}
+
+export type SignedMetadata = SignedRequest<Metadata>
+
+export interface Content {
+    text:string,
+    alt:string,
+    mentions:string[]
+}
+
+export async function createContent (
+    file:File,
+    { text, alt }:{text:string, alt:string}
+):Promise<Content> {
+    const mention = await getHashFile(file)
+    return { text, alt, mentions: [mention] }
+}
+
 /**
- * Create a signed new post object. You need to figure out the `prev` and `seq`
- * args.
+ * Create new signed metadata and content objects. You need to figure out the
+ * `prev` and `seq` args.
  * @param crypto {Crypto.Implementation} Fission crypto object
  * @param file {File} A file object, as from a browser, for the image that
  * goes with this post
  * @param args {NewPostArgs}
- * @returns {SignedPost} The new post with a signature
+ * @returns {{ metadata:SignedMetaData, content:SignedContent }} The new post
+ * with a signature
  */
 export async function create (crypto:Crypto.Implementation, file:File, args:NewPostArgs):
-Promise<SignedPost> {
-    const author = await writeKeyToDid(crypto)
+Promise<{ metadata: SignedMetadata, content:Content }> {
     const { text, username, alt, seq, prev, type } = args
+
+    // content is not signed
+    // but we take its hash, and sign a message including the hash
+    const content = await createContent(file, { text, alt })
+
+    const metadata = await createMetadata(crypto, content, {
+        username,
+        seq,
+        prev,
+        type
+    })
+
+    return { metadata, content }
+}
+
+// need to create content first
+export async function createMetadata (
+    crypto:Crypto.Implementation,
+    content:Content,
+    args:{ username:string, seq:number, prev:string|null, type:'private'|'public' }
+): Promise<SignedMetadata> {
+    const { username, seq, prev, type } = args
 
     return createMsg(crypto, {
         timestamp: timestamp(),
-        author,
         seq,
         prev,
         type,
         username,
-        content: {
-            text,
-            alt,
-            mentions: [await getHashFile(file)]
-        }
+        proof: getId(content)
     })
 }
 
-export async function createFromBuffer (crypto:Crypto.Implementation, arr:Uint8Array,
+export async function createFromBuffer (crypto:Crypto.Implementation, buf:Uint8Array,
     args:NewPostArgs):Promise<SignedPost> {
-    const author = await writeKeyToDid(crypto)
     const { text, username, alt, seq, prev, type } = args
 
     return createMsg(crypto, {
         timestamp: timestamp(),
-        author,
         seq,
         prev,
         username,
@@ -73,12 +107,12 @@ export async function createFromBuffer (crypto:Crypto.Implementation, arr:Uint8A
         content: {
             text,
             alt,
-            mentions: [getHash(arr)]
+            mentions: [getHash(buf)]
         }
     })
 }
 
-export function getId (msg:SignedPost):string {
+export function getId (msg:object):string {
     const hash = blake3(canon(msg))
     const slugifiedHash = toString(hash, 'base64url')
     return slugifiedHash

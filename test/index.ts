@@ -1,6 +1,7 @@
 import { test } from 'tapzero'
 import { WnfsPost } from '@ssc-hermes/wnfs-post'
-import { create, getId, SignedPost, verify } from '../dist/index.js'
+import { SignedMetadata, Content, create, getId, verify } from '../dist/index.js'
+// import { Metadata } from '@oddjs/odd/fs/metadata.js'
 
 // @ts-ignore
 const wn = self.oddjs
@@ -13,7 +14,7 @@ test('setup', async t => {
     t.ok(wnfsPost, 'create a wnfs instance')
 })
 
-let post:SignedPost
+let post:{ metadata:SignedMetadata, content:Content }
 test('create a post', async t => {
     const base64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII'
     const file = dataURItoFile(base64, 'test.png')
@@ -27,9 +28,11 @@ test('create a post', async t => {
     })
 
     t.ok(post, 'should return a post')
+    t.equal(typeof post.metadata.proof, 'string',
+        'should include a `proof` in metadata')
     t.equal(post.content.text, 'a test post', 'should have the right text')
-    t.equal(post.type, 'public', 'should be "public" type')
-    t.equal(typeof post.signature, 'string', 'should have a signature')
+    t.equal(post.metadata.type, 'public', 'should be "public" type')
+    t.equal(typeof post.metadata.signature, 'string', 'should have a signature')
 })
 
 test('get an ID for a post', t => {
@@ -40,7 +43,7 @@ test('get an ID for a post', t => {
 })
 
 test('verify a post', async t => {
-    const isValid = await verify(post)
+    const isValid = await verify(post.metadata)
     t.equal(isValid, true, 'should verify a valid post')
 })
 
