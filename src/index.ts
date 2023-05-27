@@ -21,8 +21,6 @@ interface NewPostArgs {
     type:'public'|'private'
 }
 
-export type SignedPost = SignedRequest<Post>
-
 export interface Metadata {
     type:'public'|'private',
     timestamp: number,
@@ -95,21 +93,20 @@ export async function createMetadata (
 }
 
 export async function createFromBuffer (crypto:Crypto.Implementation, buf:Uint8Array,
-    args:NewPostArgs):Promise<SignedPost> {
+    args:NewPostArgs):Promise<{metadata:SignedMetadata, content:Content}> {
     const { text, username, alt, seq, prev, type } = args
 
-    return createMsg(crypto, {
-        timestamp: timestamp(),
-        seq,
-        prev,
-        username,
-        type,
-        content: {
-            text,
-            alt,
-            mentions: [getHash(buf)]
-        }
-    })
+    const content = { text, alt, mentions: [getHash(buf)] }
+
+    return {
+        metadata: await createMetadata(crypto, content, {
+            username,
+            seq,
+            prev,
+            type,
+        }),
+        content
+    }
 }
 
 export function getId (msg:object):string {

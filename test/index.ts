@@ -1,7 +1,6 @@
 import { test } from 'tapzero'
 import { WnfsPost } from '@ssc-hermes/wnfs-post'
 import { SignedMetadata, Content, create, getId, verify } from '../dist/index.js'
-// import { Metadata } from '@oddjs/odd/fs/metadata.js'
 
 // @ts-ignore
 const wn = self.oddjs
