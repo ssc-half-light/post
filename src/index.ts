@@ -44,8 +44,9 @@ export async function createContent (
     file:File,
     { text, alt }:{text:string, alt:string}
 ):Promise<Content> {
+    const ext = (file.name.split('.').pop())
     const mention = await getHashFile(file)
-    return { text, alt, mentions: [mention] }
+    return { text, alt, mentions: [mention + `.${ext}`] }
 }
 
 /**
@@ -59,7 +60,7 @@ export async function createContent (
  * with a signature
  */
 export async function create (crypto:Crypto.Implementation, file:File, args:NewPostArgs):
-Promise<{ metadata: SignedMetadata, content:Content }> {
+Promise<{ metadata:SignedMetadata, content:Content }> {
     const { text, username, alt, seq, prev, type } = args
 
     // content is not signed
@@ -76,7 +77,6 @@ Promise<{ metadata: SignedMetadata, content:Content }> {
     return { metadata, content }
 }
 
-// need to create content first
 export async function createMetadata (
     crypto:Crypto.Implementation,
     content:Content,
