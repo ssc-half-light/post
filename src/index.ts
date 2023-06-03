@@ -8,10 +8,6 @@ import canon from 'json-canon'
 
 export { verify } from '@ssc-hermes/message'
 
-export interface Post {
-    content: { text:string, alt:string, mentions: string[] },
-}
-
 interface NewPostArgs {
     text:string,
     username:string,
@@ -111,6 +107,11 @@ export async function createFromBuffer (crypto:Crypto.Implementation, buf:Uint8A
     }
 }
 
+/**
+ * Stringify the given object and return a blake3 hash of it
+ * @param {object} msg Any JSON stringifiable object
+ * @returns {string} Blake3 hash
+ */
 export function getId (msg:object):string {
     const hash = blake3(canon(msg))
     const slugifiedHash = toString(hash, 'base64url')
