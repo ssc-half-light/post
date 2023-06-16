@@ -4,6 +4,7 @@
   "type": "module",
   "version": "0.7.0",
   "main": "dist/index.js",
+  "author": "nichoth <nichoth@gmail.com> (https://nichoth.com)",
   "scripts": {
     "lint": "standardx -v \"./**/*.ts\"",
     "build-tests": "esbuild test/index.ts --bundle --format=cjs --keep-names > test/test-bundle.js",
@@ -12,7 +13,7 @@
     "build-cjs": "esbuild src/*.ts --format=cjs --keep-names --outdir=./dist --out-extension:.js=.cjs",
     "build": "mkdir -p ./dist && rm -rf ./dist/* && npm run build-cjs && tsc",
     "preversion": "npm run lint",
-    "postversion": "git push && git push --tags && npm publish",
+    "postversion": "git push && git push --tags && export $(cat .env | xargs) && npm publish",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
@@ -49,10 +50,12 @@
       ]
     }
   },
-  "author": "nichoth <nichoth@gmail.com> (https://nichoth.com)",
   "license": "AGPL-3.0-or-later",
   "directories": {
     "test": "test"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   },
   "repository": {
     "type": "git",
