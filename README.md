@@ -28,13 +28,15 @@ const post = await create(wnfsPost.crypto, file, {
 })
 
 // => {
-//     author: string,
-//     seq: number,
-//     prev: string|null,
-//     username: string,
-//     content: { type:string, text:string, alt:string, mentions: string[] }
-//     timestamp: number,
-//     signature: string
+//       metadata: {
+//         seq: number,
+//         prev: string|null,
+//         username: string,
+//         timestamp: number,
+//         signature: string,
+//         author: string
+//       },
+//       content: { text:string, alt:string, mentions:string[] }
 // }
 
 // now do something with the post, and save the `file` somewhere.
