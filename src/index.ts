@@ -48,11 +48,11 @@ export async function createContent (
 /**
  * Create new signed metadata and content objects. You need to figure out the
  * `prev` and `seq` args.
- * @param crypto {Crypto.Implementation} Fission crypto object
- * @param file {File} A file object, as from a browser, for the image that
+ * @param {Crypto.Implementation} crypto Fission crypto object
+ * @param {File} file A file object, as from a browser, for the image that
  * goes with this post
- * @param args {NewPostArgs}
- * @returns {{ metadata:SignedMetaData, content:SignedContent }} The new post
+ * @param {NewPostArgs} args content and stuff
+ * @returns {{ metadata:SignedMetaData, content:Content }} The new post
  * with a signature
  */
 export async function create (crypto:Crypto.Implementation, file:File, args:NewPostArgs):

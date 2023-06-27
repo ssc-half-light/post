@@ -34,7 +34,8 @@ const post = await create(wnfsPost.crypto, file, {
 //         username: string,
 //         timestamp: number,
 //         signature: string,
-//         author: string
+//         author: string,
+//         proof: string   // <- a hash of the content
 //       },
 //       content: { text:string, alt:string, mentions:string[] }
 // }
