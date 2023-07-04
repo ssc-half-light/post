@@ -119,7 +119,7 @@ export function getId (msg:object):string {
 }
 
 // https://github.com/ssbc/ssb2-discussion-forum/issues/22#issuecomment-1513622620
-// {
+//  {
 //     "content": {
 //       "text": "Hello world!",
 //       "when": 1681842582086 // optional
@@ -143,4 +143,4 @@ export function getId (msg:object):string {
 //     },
 //     // Signs the `metadata` (encoded as alphabetically-sorted JSON with no spaces nor newlines)
 //     "sig": "5abJdD6RRCsWXKJLaEKRhUb1HKh4aKPFteFRgUBfyJD4cFzo5MVaMdWbwM2CfpNRFSjR9NkczRL2LcSyQVThYnRr"
-//   }
+//  }
