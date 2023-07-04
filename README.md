@@ -10,7 +10,7 @@ We create an object with two fields, `metadata` and `content`. This way we can k
     prev: string|null,  // <- hash of previous `metadata`
     username: string,
     timestamp: number,
-    proof: string   // <- a hash of the content
+    proof: string,   // <- a hash of the content
     signature: string,
     author: string,  // <- the DID of the author device
   },
