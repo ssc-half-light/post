@@ -1,7 +1,7 @@
 # post
 Create in-memory post objects. This does not handle persistence.
 
-We create an object with two fields, `metadata` and `content`. This way we can keep a merkle-list of posts without concern of what the content is in the posts. The content can be encrypted or deleted, and either way, the merkle list of metadata would still be= valid.
+We create an object with two fields, `metadata` and `content`. This way we can keep a merkle-list of posts without concern of what the content is in the posts. The content can be encrypted or deleted, and either way, the merkle list of metadata would still be valid.
 
 ```ts
 {
