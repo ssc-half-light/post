@@ -1,6 +1,27 @@
 # post
 Create in-memory post objects. This does not handle persistence.
 
+We create an object with two fields, `metadata` and `content`. This way we can keep a merkle-list of posts without concern of what the content is in the posts. The content can be encrypted or deleted, and either way, the merkle list of metadata would still be= valid.
+
+```ts
+{
+  metadata: {
+    seq: number,
+    prev: string|null,  // <- hash of previous `metadata`
+    username: string,
+    timestamp: number,
+    proof: string   // <- a hash of the content
+    signature: string,
+    author: string,  // <- the DID of the author device
+  },
+  content: {
+    text:string,
+    alt:string,
+    mentions:string[]  // <- an array of hashes of blobs in this post
+  }
+}
+```
+
 ## install
 ```
 npm i -S @ssc-hermes/post
@@ -34,7 +55,7 @@ const post = await create(wnfsPost.crypto, file, {
         prev: string|null,
         username: string,
         timestamp: number,
-        proof: string   // <- a hash of the content
+        proof: string
         signature: string,
         author: string,
       },
