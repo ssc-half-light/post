@@ -34,7 +34,7 @@ export interface Content {
     mentions:string[]
 }
 
-export type SignedPost = { metadata:SignedMetadata, content:Content }
+export type SignedPost = { metadata:SignedMetadata, content?:Content }
 
 export async function createContent (
     file:File,
