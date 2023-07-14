@@ -14,11 +14,11 @@ interface NewPostArgs {
     alt:string,
     seq:number,
     prev:string|null,  // the hash of the previous message
-    type:'public'|'private'
+    type:'friends'|'private'
 }
 
 export interface Metadata {
-    type:'public'|'private',
+    type:'friends'|'private',
     timestamp: number,
     proof:string,
     seq: number,
@@ -76,7 +76,7 @@ Promise<{ metadata:SignedMetadata, content:Content }> {
 export async function createMetadata (
     crypto:Crypto.Implementation,
     content:Content,
-    args:{ username:string, seq:number, prev:string|null, type:'private'|'public' }
+    args:{ username:string, seq:number, prev:string|null, type:'friends'|'private' }
 ): Promise<SignedMetadata> {
     const { username, seq, prev, type } = args
 
