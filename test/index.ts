@@ -19,7 +19,7 @@ test('create a post', async t => {
     const file = dataURItoFile(base64, 'test.png')
     post = await create(wnfsPost.crypto, file, {
         seq: 0,
-        type: 'public',
+        type: 'friends',
         prev: null,
         text: 'a test post',
         username: wnfsPost.username,
@@ -30,7 +30,7 @@ test('create a post', async t => {
     t.equal(typeof post.metadata.proof, 'string',
         'should include a `proof` in metadata')
     t.equal(post.content.text, 'a test post', 'should have the right text')
-    t.equal(post.metadata.type, 'public', 'should be "public" type')
+    t.equal(post.metadata.type, 'friends', 'should be "public" type')
     t.equal(typeof post.metadata.signature, 'string', 'should have a signature')
 })
 
