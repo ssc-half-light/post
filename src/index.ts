@@ -14,11 +14,9 @@ interface NewPostArgs {
     alt:string,
     seq:number,
     prev:string|null,  // the hash of the previous message
-    type:'friends'|'private'
 }
 
 export interface Metadata {
-    type:'friends'|'private',
     timestamp: number,
     proof:string,
     seq: number,
@@ -57,7 +55,7 @@ export async function createContent (
  */
 export async function create (crypto:Crypto.Implementation, file:File, args:NewPostArgs):
 Promise<{ metadata:SignedMetadata, content:Content }> {
-    const { text, username, alt, seq, prev, type } = args
+    const { text, username, alt, seq, prev, } = args
 
     // content is not signed
     // but we take its hash, and sign a message including the hash
@@ -66,8 +64,7 @@ Promise<{ metadata:SignedMetadata, content:Content }> {
     const metadata = await createMetadata(crypto, content, {
         username,
         seq,
-        prev,
-        type
+        prev
     })
 
     return { metadata, content }
@@ -76,15 +73,14 @@ Promise<{ metadata:SignedMetadata, content:Content }> {
 export async function createMetadata (
     crypto:Crypto.Implementation,
     content:Content,
-    args:{ username:string, seq:number, prev:string|null, type:'friends'|'private' }
+    args:{ username:string, seq:number, prev:string|null }
 ): Promise<SignedMetadata> {
-    const { username, seq, prev, type } = args
+    const { username, seq, prev } = args
 
     return createMsg(crypto, {
         timestamp: timestamp(),
         seq,
         prev,
-        type,
         username,
         proof: getId(content)
     })
@@ -92,7 +88,7 @@ export async function createMetadata (
 
 export async function createFromBuffer (crypto:Crypto.Implementation, buf:Uint8Array,
     args:NewPostArgs):Promise<{metadata:SignedMetadata, content:Content}> {
-    const { text, username, alt, seq, prev, type } = args
+    const { text, username, alt, seq, prev } = args
 
     const content = { text, alt, mentions: [getHash(buf)] }
 
@@ -101,7 +97,6 @@ export async function createFromBuffer (crypto:Crypto.Implementation, buf:Uint8A
             username,
             seq,
             prev,
-            type,
         }),
         content
     }
