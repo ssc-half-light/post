@@ -26,6 +26,7 @@
     "uint8arrays": "^4.0.3"
   },
   "devDependencies": {
+    "@ssc-hermes/wnfs-post": "github:ssc-half-light/wnfs-post",
     "@typescript-eslint/parser": "^5.55.0",
     "esbuild": "^0.15.18",
     "standardx": "^7.0.0",

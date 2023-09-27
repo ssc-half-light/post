@@ -1,16 +1,16 @@
 import { test } from 'tapzero'
-// import { WnfsPost } from '@ssc-half-light/wnfs-post'
+import { WnfsPost } from '@ssc-hermes/wnfs-post'
 import { SignedMetadata, Content, create, getId, verify } from '../dist/index.js'
 
 // @ts-ignore
 const wn = self.oddjs
 
-// let wnfsPost:WnfsPost
+let wnfsPost:WnfsPost
 
 test('setup', async t => {
     const APP_INFO = { name: 'testing', creator: 'test' }
-    // wnfsPost = await WnfsPost.create(wn, APP_INFO)
-    // t.ok(wnfsPost, 'create a wnfs instance')
+    wnfsPost = await WnfsPost.create(wn, APP_INFO)
+    t.ok(wnfsPost, 'create a wnfs instance')
 })
 
 let post:{ metadata:SignedMetadata, content:Content }
