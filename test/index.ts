@@ -1,27 +1,26 @@
-import { test } from 'tapzero'
-import { WnfsPost } from '@ssc-hermes/wnfs-post'
-import { SignedMetadata, Content, create, getId, verify } from '../dist/index.js'
+import { test } from '@nichoth/tapzero'
+import { create, getId, verify } from '../dist/index.js'
 
-// @ts-ignore
-const wn = self.oddjs
+const wn = globalThis.oddjs
+let program
 
-let wnfsPost:WnfsPost
-
-test('setup', async t => {
-    const APP_INFO = { name: 'testing', creator: 'test' }
-    wnfsPost = await WnfsPost.create(wn, APP_INFO)
-    t.ok(wnfsPost, 'create a wnfs instance')
+test('setup', async (t) => {
+    program = await wn.program({
+        namespace: { creator: 'testing', name: 'test' },
+        debug: true
+    })
+    t.ok(program, 'program exists')
 })
 
-let post:{ metadata:SignedMetadata, content:Content }
+let post
 test('create a post', async t => {
     const base64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII'
     const file = dataURItoFile(base64, 'test.png')
-    post = await create(wnfsPost.crypto, file, {
+    post = await create(program.components.crypto, file, {
         seq: 0,
         prev: null,
         text: 'a test post',
-        username: wnfsPost.username,
+        username: 'alice',
         alt: 'testing'
     })
 

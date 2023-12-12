@@ -34,6 +34,15 @@ export interface Content {
 
 export type SignedPost = { metadata:SignedMetadata, content:Content }
 
+/**
+ * Take the hash of a given file, and use that as a reference in the new
+ * post object.
+ *
+ * @param {File} file A browser file object. We depend on there being a .name
+ * property.
+ * @param opts Text and alt content
+ * @returns {Promise<Content>}
+ */
 export async function createContent (
     file:File,
     { text, alt }:{text:string, alt:string}
@@ -70,6 +79,14 @@ Promise<{ metadata:SignedMetadata, content:Content }> {
     return { metadata, content }
 }
 
+/**
+ * Create the post metadata given some content.
+ *
+ * @param {Crypto.Implementation} crypto Webnative crypto
+ * @param {Content} content Post content
+ * @param {{ username:string, seq:number, prev:string|null }} args
+ * @returns {Promise<SignedMetadata>}
+ */
 export async function createMetadata (
     crypto:Crypto.Implementation,
     content:Content,
