@@ -24,7 +24,7 @@ We create an object with two fields, `metadata` and `content`. This way we can k
 
 ## install
 ```
-npm i -S @ssc-hermes/post
+npm i -S @ssc-half-light/post
 ```
 
 ## example
@@ -33,7 +33,7 @@ You need to supply a Fission `Crypto` object, the hash of the previous message, 
 ### create
 
 ```ts
-import { create } from '@ssc-hermes/post'
+import { create } from '@ssc-half-light/post'
 const wn = self.oddjs  // `@oddjs/odd` is attached to `window` here
 
 const file:File = document.querySelector('.file-input').files[0]
@@ -69,7 +69,7 @@ const post = await create(oddCrypto, file, {
 Get a URL-safe hash of this post. 
 
 ```js
-import { getId } from '@ssc-hermes/post'
+import { getId } from '@ssc-half-light/post'
 const id = getId(post)
 // 5olZOzr5xalmGXTxATl4Ldt4V0Z2Z8OrD3KxLTj-ngU
 ```

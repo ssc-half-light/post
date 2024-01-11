@@ -14,7 +14,7 @@
     "build": "mkdir -p ./dist && rm -rf ./dist/* && npm run build-cjs && tsc --project tsconfig.build.json",
     "preinstall": "export $(cat .env | xargs)",
     "preversion": "npm run lint",
-    "postversion": "git push && git push --tags && export $(cat .env | grep -v \"#\" | xargs) && npm publish",
+    "postversion": "git push --follow-tags && export $(cat .env | grep -v \"#\" | xargs) && npm publish",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
