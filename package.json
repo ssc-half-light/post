@@ -52,7 +52,11 @@
       ]
     }
   },
-  "license": "AGPL-3.0-or-later",
+  "files": [
+    "dist/*",
+    "LICENSE"
+  ],
+  "license": "SEE LICENSE IN LICENSE",
   "directories": {
     "test": "test"
   },
@@ -61,10 +65,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ssc-hermes/post.git"
+    "url": "git+https://github.com/ssc-half-light/post.git"
   },
   "bugs": {
-    "url": "https://github.com/ssc-hermes/post/issues"
+    "url": "https://github.com/ssc-half-light/post/issues"
   },
-  "homepage": "https://github.com/ssc-hermes/post#readme"
+  "homepage": "https://github.com/ssc-half-light/post#readme"
 }

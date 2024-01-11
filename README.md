@@ -1,4 +1,8 @@
 # post
+[![types](https://img.shields.io/npm/types/msgpackr)](README.md)
+[![module](https://img.shields.io/badge/module-ESM-blue)](README.md)
+[![license](https://img.shields.io/badge/license-PolyForm%20Shield-fc9662)](LICENSE)
+
 Create in-memory post objects. This does not handle persistence.
 
 We create an object with two fields, `metadata` and `content`. This way we can keep a merkle-list of posts without concern of what the content is in the posts. The content can be encrypted or deleted, and either way, the merkle list of metadata would still be valid.
