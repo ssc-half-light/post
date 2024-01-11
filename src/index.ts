@@ -44,12 +44,16 @@ export type SignedPost = { metadata:SignedMetadata, content:Content }
  * @returns {Promise<Content>}
  */
 export async function createContent (
-    file:File,
+    files:File[],
     { text, alt }:{text:string, alt:string}
 ):Promise<Content> {
-    const ext = (file.name.split('.').pop())
-    const mention = await getHashFile(file)
-    return { text, alt, mentions: [mention + `.${ext}`] }
+    const fileHashes = await Promise.all(files.map(async file => {
+        const ext = (file.name.split('.').pop())
+        const mention = await getHashFile(file)
+        return mention + `.${ext}`
+    }))
+
+    return { text, alt, mentions: fileHashes }
 }
 
 /**
@@ -62,13 +66,13 @@ export async function createContent (
  * @returns {{ metadata:SignedMetaData, content:Content }} The new post
  * with a signature
  */
-export async function create (crypto:Crypto.Implementation, file:File, args:NewPostArgs):
+export async function create (crypto:Crypto.Implementation, files:File[], args:NewPostArgs):
 Promise<{ metadata:SignedMetadata, content:Content }> {
     const { text, username, alt, seq, prev, } = args
 
     // content is not signed
     // but we take its hash, and sign a message including the hash
-    const content = await createContent(file, { text, alt })
+    const content = await createContent(files, { text, alt })
 
     const metadata = await createMetadata(crypto, content, {
         username,

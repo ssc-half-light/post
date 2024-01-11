@@ -34,15 +34,15 @@ You need to supply a Fission `Crypto` object, the hash of the previous message, 
 
 ```ts
 import { create } from '@ssc-half-light/post'
-const wn = self.oddjs  // `@oddjs/odd` is attached to `window` here
 
 const file:File = document.querySelector('.file-input').files[0]
+const files = [file]
 
-const post = await create(oddCrypto, file, {
+const post = await create(oddCrypto, files, {
     seq: 0,
     prev: null,  // `prev` should be a hash of the previous message
     text: 'a test post',
-    username: wnfsPost.username,
+    username: 'alice',
     alt: 'testing'
 })
 
