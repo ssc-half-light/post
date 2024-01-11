@@ -16,7 +16,7 @@ let post
 test('create a post', async t => {
     const base64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII'
     const file = dataURItoFile(base64, 'test.png')
-    post = await create(program.components.crypto, file, {
+    post = await create(program.components.crypto, [file], {
         seq: 0,
         prev: null,
         text: 'a test post',

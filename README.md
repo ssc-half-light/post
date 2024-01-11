@@ -27,7 +27,7 @@ We create an object with two fields, `metadata` and `content`. This way we can k
 ```
 
 ## install
-```
+```sh
 npm i -S @ssc-half-light/post
 ```
 
