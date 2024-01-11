@@ -2,7 +2,7 @@
   "name": "@ssc-half-light/post",
   "description": "Posts in *hermes*",
   "type": "module",
-  "version": "0.13.0",
+  "version": "0.13.1",
   "main": "dist/index.js",
   "author": "nichoth <nichoth@gmail.com> (https://nichoth.com)",
   "scripts": {
