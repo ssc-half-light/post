@@ -33,6 +33,7 @@ export interface Content {
 }
 
 export type SignedPost = { metadata:SignedMetadata, content:Content }
+export type EncryptedPost = { metadata:SignedMetadata, content:string }
 
 /**
  * Take the hash of a given file, and use that as a reference in the new
@@ -66,8 +67,11 @@ export async function createContent (
  * @returns {{ metadata:SignedMetaData, content:Content }} The new post
  * with a signature
  */
-export async function create (crypto:Crypto.Implementation, files:File[], args:NewPostArgs):
-Promise<{ metadata:SignedMetadata, content:Content }> {
+export async function create (
+    crypto:Crypto.Implementation,
+    files:File[],
+    args:NewPostArgs
+):Promise<{ metadata:SignedMetadata, content:Content }> {
     const { text, username, alt, seq, prev, } = args
 
     // content is not signed
@@ -95,7 +99,7 @@ export async function createMetadata (
     crypto:Crypto.Implementation,
     content:Content,
     args:{ username:string, seq:number, prev:string|null }
-): Promise<SignedMetadata> {
+):Promise<SignedMetadata> {
     const { username, seq, prev } = args
 
     return createMsg(crypto, {
@@ -107,8 +111,11 @@ export async function createMetadata (
     })
 }
 
-export async function createFromBuffer (crypto:Crypto.Implementation, buf:Uint8Array,
-    args:NewPostArgs):Promise<{metadata:SignedMetadata, content:Content}> {
+export async function createFromBuffer (
+    crypto:Crypto.Implementation,
+    buf:Uint8Array,
+    args:NewPostArgs
+):Promise<{ metadata:SignedMetadata, content:Content }> {
     const { text, username, alt, seq, prev } = args
 
     const content = { text, alt, mentions: [getHash(buf)] }
