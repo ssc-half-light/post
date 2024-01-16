@@ -2,7 +2,7 @@
   "name": "@ssc-half-light/post",
   "description": "Posts in Half Light",
   "type": "module",
-  "version": "0.14.0",
+  "version": "0.14.1",
   "main": "dist/index.js",
   "author": "nichoth <nichoth@gmail.com> (https://nichoth.com)",
   "scripts": {
