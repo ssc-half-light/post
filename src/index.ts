@@ -6,7 +6,7 @@ import { blake3 } from '@noble/hashes/blake3'
 import { toString } from 'uint8arrays/to-string'
 import canon from 'json-canon'
 
-export { verify } from '@ssc-hermes/message'
+export { verify } from '@ssc-half-light/message'
 
 interface NewPostArgs {
     text:string,
@@ -39,7 +39,7 @@ export type EncryptedPost = { metadata:SignedMetadata, content:string }
  * Take the hash of a given file, and use that as a reference in the new
  * post object.
  *
- * @param {File} file A browser file object. We depend on there being a .name
+ * @param {File[]} files Browser file objects. We depend on them having a `.name`
  * property.
  * @param opts Text and alt content
  * @returns {Promise<Content>}
@@ -60,6 +60,8 @@ export async function createContent (
 /**
  * Create new signed metadata and content objects. You need to figure out the
  * `prev` and `seq` args.
+ * @NOTE This creates a *non-encrypted* post.
+ *
  * @param {Crypto.Implementation} crypto Fission crypto object
  * @param {File} file A file object, as from a browser, for the image that
  * goes with this post

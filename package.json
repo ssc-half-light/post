@@ -1,6 +1,6 @@
 {
   "name": "@ssc-half-light/post",
-  "description": "Posts in *hermes*",
+  "description": "Posts in Half Light",
   "type": "module",
   "version": "0.14.0",
   "main": "dist/index.js",
